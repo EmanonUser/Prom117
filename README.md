@@ -10,7 +10,7 @@ Hardware Used :
 Software Used :
     
   - Platformio
-  - [SparkFun_TMP117] library
+  - [**SparkFun_TMP117**] library
   - ESPAsyncWebServer library
   - Prometheus TSDB
   
