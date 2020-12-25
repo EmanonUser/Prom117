@@ -1,3 +1,7 @@
+/*
+Prom117 version 0.8
+*/
+
 #include <ESP8266WiFi.h>
 #include <Wire.h>
 #include <SparkFun_TMP117.h>
@@ -46,11 +50,17 @@ void setup() {
 void loop() {
   now = millis();
   if(now - last > TIMER) {
-    last = now;
-    int iuptime = (int) millis() / 1000;
-    snprintf(uptime,sizeof(uptime), "%d", iuptime);
-    generate_exporter();
-    Serial.println("Gawr Gura");
+    if(WiFi.status() == WL_CONNECTED){
+      last = now;
+      int iuptime = (int) millis() / 1000;
+      snprintf(uptime,sizeof(uptime), "%d", iuptime); // Update uptime
+
+      generate_exporter();
+      Serial.println("Gawr Gura");
+    }
+    else if(WiFi.status() != WL_CONNECTED) {
+      setup_wifi();
+    }
   }
 }
 
@@ -64,7 +74,7 @@ void setup_wifi() {
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(100);
+    delay(250);
     Serial.print(".");
   }
   randomSeed(micros());
@@ -83,8 +93,9 @@ void generate_exporter() {
     strcpy(myindex[3], "\n# TYPE nodemcu_tmp117_temp gauge\n");
     strcpy(myindex[4], "nodemcu_tmp117_temp ");
     strcpy(myindex[6], "\n");
-    staticValue = true;
+
     Serial.println("staticValue generated");
+    staticValue = true;
   }
 
   strcpy(myindex[2], uptime);
