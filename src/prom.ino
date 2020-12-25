@@ -71,6 +71,7 @@ void generate_exporter() {
   strcpy(myindex[0], "# TYPE nodemcu_uptime_seconds gauge\n");
   strcpy(myindex[1], "nodemcu_uptime_seconds ");
   strcpy(myindex[2], uptime);
+
   strcpy(myindex[3], "\n# TYPE nodemcu_tmp117_temp gauge\n");
   strcpy(myindex[4], "nodemcu_tmp117_temp ");
   strcpy(myindex[5], temp);
