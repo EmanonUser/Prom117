@@ -42,6 +42,7 @@ void loop() {
   snprintf(uptime,sizeof(uptime), "%d", iuptime);
   delay(500);
   generate_exporter();
+  Serial.println("Gawr Gura");
 
 }
 
