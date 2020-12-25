@@ -9,11 +9,13 @@ Hardware Used :
 
 Software Used :
     
-  - Platformio
+  - [**PlatformIO CLI**]
   - [**SparkFun_TMP117**] library
-  - ESPAsyncWebServer library
-  - Prometheus TSDB
+  - [**ESPAsyncWebServer**]: library
+  - [**Prometheus TSDB**]
   
 
-
+[**PlatformIO CLI**]: <https://platformio.org/>
 [**SparkFun_TMP117**]: <https://github.com/sparkfun/SparkFun_TMP117_Arduino_Library>
+[**ESPAsyncWebServer**]: <https://github.com/me-no-dev/ESPAsyncWebServer>
+[**Prometheus TSDB**]: <https://prometheus.io/>
