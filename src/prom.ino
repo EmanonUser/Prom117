@@ -7,10 +7,12 @@
 
 #define NB_LIGNE 50
 #define STRING_SIZE 100
+#define TIMER 500 // Each loop in ms
 
 #define SDA_PIN D1
 #define SCL_PIN D2
-#define i2C_CLOCK 400000
+#define i2C_CLOCK 400000 // Fast mode
+
 
 const char* ssid = myssid;
 const char* password = mypasswd;
@@ -20,6 +22,10 @@ String mystr = "";
 
 char uptime[64];
 char temp[64] = "22.051263";
+
+bool staticValue = false; // Static strings, Generated once, ( I don't want them in setup() )
+unsigned long now = 0;
+unsigned long last = 0;
 
 AsyncWebServer server(9100);
 TMP117 sensor;
@@ -38,12 +44,14 @@ void setup() {
 }
 
 void loop() {
-  int iuptime = (int) millis() / 1000;
-  snprintf(uptime,sizeof(uptime), "%d", iuptime);
-  delay(500);
-  generate_exporter();
-  Serial.println("Gawr Gura");
-
+  now = millis();
+  if(now - last > TIMER) {
+    last = now;
+    int iuptime = (int) millis() / 1000;
+    snprintf(uptime,sizeof(uptime), "%d", iuptime);
+    generate_exporter();
+    Serial.println("Gawr Gura");
+  }
 }
 
 
@@ -68,14 +76,20 @@ void setup_wifi() {
 
 void generate_exporter() {
   mystr = "";
-  strcpy(myindex[0], "# TYPE nodemcu_uptime_seconds gauge\n");
-  strcpy(myindex[1], "nodemcu_uptime_seconds ");
-  strcpy(myindex[2], uptime);
+  if(staticValue == false) {
+    strcpy(myindex[0], "# TYPE nodemcu_uptime_seconds gauge\n");
+    strcpy(myindex[1], "nodemcu_uptime_seconds ");
 
-  strcpy(myindex[3], "\n# TYPE nodemcu_tmp117_temp gauge\n");
-  strcpy(myindex[4], "nodemcu_tmp117_temp ");
+    strcpy(myindex[3], "\n# TYPE nodemcu_tmp117_temp gauge\n");
+    strcpy(myindex[4], "nodemcu_tmp117_temp ");
+    strcpy(myindex[6], "\n");
+    staticValue = true;
+    Serial.println("staticValue generated");
+  }
+
+  strcpy(myindex[2], uptime);
   strcpy(myindex[5], temp);
-  strcpy(myindex[6], "\n");
+  
 
   for(int i = 0; i < 7; ++i) {
     mystr += myindex[i];
