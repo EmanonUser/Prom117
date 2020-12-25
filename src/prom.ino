@@ -15,11 +15,11 @@ Prom117 version 0.8
 
 #define SDA_PIN D1
 #define SCL_PIN D2
-#define i2C_CLOCK 400000 // Fast mode
+#define i2C_CLOCK 400000 // i2C Fast mode
 
 
-const char* ssid = myssid;
-const char* password = mypasswd;
+const char* ssid = myssid; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_ssid";
+const char* password = mypasswd; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_password";
 
 char myindex[NB_LIGNE][STRING_SIZE]; 
 String mystr = "";
@@ -28,6 +28,8 @@ char uptime[64];
 char temp[64] = "22.051263";
 
 bool staticValue = false; // Static strings, Generated once, ( I don't want them in setup() )
+bool b_sensor_init = false;
+
 unsigned long now = 0;
 unsigned long last = 0;
 
@@ -39,12 +41,12 @@ void setup() {
   Serial.begin(115200);
   Wire.begin(SDA_PIN, SCL_PIN);
   Wire.setClock(i2C_CLOCK);
-
   setup_wifi();
   server.on("/metrics", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(200, "text/plain", mystr);
 });
   server.begin();
+  //sensor_init();
 }
 
 void loop() {
@@ -52,8 +54,8 @@ void loop() {
   if(now - last > TIMER) {
     if(WiFi.status() == WL_CONNECTED){
       last = now;
-      int iuptime = (int) millis() / 1000;
-      snprintf(uptime,sizeof(uptime), "%d", iuptime); // Update uptime
+      int intUptime = (int) millis() / 1000;
+      snprintf(uptime,sizeof(uptime), "%d", intUptime); // Update uptime
 
       generate_exporter();
       Serial.println("Gawr Gura");
@@ -100,23 +102,21 @@ void generate_exporter() {
 
   strcpy(myindex[2], uptime);
   strcpy(myindex[5], temp);
-  
 
   for(int i = 0; i < 7; ++i) {
     mystr += myindex[i];
   }
 }
 
-void SensorInit() {
-  bool sensor_init = false;
-  sensor_init = sensor.begin();
+void sensor_init() {
+  b_sensor_init = sensor.begin();
   
-  while (sensor_init != true) {
-    Serial.println("TMP117 not initialised, retry");
-    sensor_init = sensor.begin();
+  while (b_sensor_init == false) {
+      Serial.println("TMP117 not initialised, retry in 10s");
+      delay(10000);
   }
   
-  if (sensor_init == true) {
+  if (b_sensor_init == true) {
     Serial.println("TMP117 initialised");
   }
 }
@@ -126,7 +126,7 @@ const char* SensorData() {
   char sTempC[64];
   if (sensor.dataReady() == true) {
     tempC = sensor.readTempC();
-    dtostrf(tempC, 11, 7, sTempC);
+    snprintf(sTempC,sizeof(sTempC), "%f", tempC);
     return sTempC;
   }
   else
