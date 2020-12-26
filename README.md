@@ -28,8 +28,7 @@ $ cd Prom117/
 ```
 
 
-Modify you WiFi logins in Prom117/lib/Secret/Secret.h
-Compile then flash automatically via esptools
+Modify you WiFi logins in Prom117/lib/Secret/Secret.h then compile and flash automatically via esptools
 
 ```sh
 $ vim lib/Secret/Secret.h
