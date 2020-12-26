@@ -21,6 +21,7 @@ Prom117 version 0.8
 
 const char* ssid = myssid; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_ssid";
 const char* password = mypasswd; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_password";
+const char* hostname = "prom117"; //DHCP Hostname
 
 char myindex[NB_LIGNE][STRING_SIZE]; 
 String mystr = "";
@@ -91,6 +92,12 @@ void setup_wifi() {
   Serial.println("WiFi connected");
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
+  if(WiFi.hostname(hostname)) {
+    Serial.println("Hostname: ");
+    Serial.println(hostname);
+  }
+  
+
 }
 
 void generate_exporter() {
