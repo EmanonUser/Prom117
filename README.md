@@ -16,6 +16,7 @@ Software Used :
   
 
 ### Compile using platformio CLI
+PlatformIO will take care of all the dependency for you
 
 Install [**PlatformIO**] on your platform
 
@@ -36,11 +37,9 @@ $ cd Prom117/
 Modify you WiFi logins in Prom117/lib/Secret/Secret.h
 ```sh
 $ vim lib/Secret/Secret.h
-```
-
-```sh
 $ pio run -e my_nodemcuv2 --target upload
 ```
+Done !
 
 Serial monitoring
 ```sh
