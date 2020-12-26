@@ -34,16 +34,15 @@ $ cd Prom117/
 
 Modify you WiFi logins in Prom117/lib/Secret/Secret.h
 
-( pio is an alias for platformio )
 ```sh
 $ vim lib/Secret/Secret.h
-$ pio run -e my_nodemcuv2 --target upload
+$ platformio run -e my_nodemcuv2 --target upload
 ```
 Done !
 
 Serial monitoring
 ```sh
-$ pio device monitor
+$ platformio device monitor
 ```
 
 
