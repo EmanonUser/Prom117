@@ -22,7 +22,7 @@ Install [**PlatformIO**] and git on your platform
 
 Debian/Ubuntu
 ```sh
-$ sudo apt install git platformio 
+$ sudo apt install git 
 $ git clone https://github.com/MoEmanon/Prom117.git
 $ cd Prom117/
 ```
