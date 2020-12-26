@@ -2,6 +2,7 @@
 Prom117 version 0.8
 */
 
+#include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <Wire.h>
 #include <SparkFun_TMP117.h>
@@ -32,6 +33,12 @@ bool b_sensor_init = false;
 
 unsigned long now = 0;
 unsigned long last = 0;
+
+// Prototype
+void setup_wifi();
+void generate_exporter();
+void sensor_init();
+const char* SensorData();
 
 AsyncWebServer server(9100);
 TMP117 sensor;
