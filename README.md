@@ -49,7 +49,7 @@ $ platformio device monitor
 [**Sparkfun Texas Instrument TMP117 high-accuracy, low-power, i2C digital temperature sensor**]:<https://www.sparkfun.com/products/15805>
 
 [**PlatformIO CLI**]: <https://platformio.org/>
-[**PlatformIO**]: <https://platformio.org/>
+[**PlatformIO**]: <https://docs.platformio.org/en/latest/core/installation.html>
 [**SparkFun_TMP117**]: <https://github.com/sparkfun/SparkFun_TMP117_Arduino_Library>
 [**ESPAsyncWebServer**]: <https://github.com/me-no-dev/ESPAsyncWebServer>
 [**Prometheus TSDB**]: <https://prometheus.io/>
