@@ -18,21 +18,18 @@ Software Used :
 ### Compile using platformio CLI
 PlatformIO will take care of all the dependency for you
 
-Install [**PlatformIO**] on your platform
+Install [**PlatformIO**] and git on your platform
 
 Debian/Ubuntu
 ```sh
-$ sudo apt install platformio
-```
-
-
-Compile then flash automatically via esptools
-```sh
+$ sudo apt install git platformio 
 $ git clone https://github.com/MoEmanon/Prom117.git
 $ cd Prom117/
 ```
 
+
 Modify you WiFi logins in Prom117/lib/Secret/Secret.h
+Compile then flash automatically via esptools
 
 ```sh
 $ vim lib/Secret/Secret.h
