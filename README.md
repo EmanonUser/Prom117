@@ -24,14 +24,28 @@ Debian/Ubuntu
 $ sudo apt install platformio
 ```
 
-Compile then flash automatically
+Modify you WiFi logins in Prom117/lib/Secret/Secret.h
+
+
+Compile then flash automatically via esptools (pio is an alias for platformio)
 ```sh
 $ git clone https://github.com/MoEmanon/Prom117.git
 $ cd Prom117/
-$ platformio run -e my_nodemcuv2 --target upload
 ```
 
+Modify you WiFi logins in Prom117/lib/Secret/Secret.h
+```sh
+$ vim lib/Secret/Secret.h
+```
 
+```sh
+$ pio run -e my_nodemcuv2 --target upload
+```
+
+Serial monitoring
+```sh
+$ pio device monitor
+```
 
 
 [**NodeMCUv2 (ESP12-E)**]: <https://www.nodemcu.com/index_en.html>
