@@ -124,7 +124,7 @@ void sensor_init() {
 const char* SensorData() {
   double tempC = 0.0;
   char sTempC[64];
-  if (sensor.dataReady() == true) {
+  if (sensor.dataReady() == true) { //Should always return true if the sensor is in Continuous Conversion Mode
     tempC = sensor.readTempC();
     snprintf(sTempC,sizeof(sTempC), "%f", tempC);
     return sTempC;
