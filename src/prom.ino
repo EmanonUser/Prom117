@@ -58,7 +58,7 @@ void loop() {
       snprintf(uptime,sizeof(uptime), "%d", intUptime); // Update uptime
 
       generate_exporter();
-      Serial.println("Gawr Gura");
+      Serial.println(mystr);
     }
     else if(WiFi.status() != WL_CONNECTED) {
       setup_wifi();
