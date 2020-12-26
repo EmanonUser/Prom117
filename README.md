@@ -25,16 +25,15 @@ Debian/Ubuntu
 $ sudo apt install platformio
 ```
 
-Modify you WiFi logins in Prom117/lib/Secret/Secret.h
 
-
-Compile then flash automatically via esptools (pio is an alias for platformio)
+Compile then flash automatically via esptools
 ```sh
 $ git clone https://github.com/MoEmanon/Prom117.git
 $ cd Prom117/
 ```
 
 Modify you WiFi logins in Prom117/lib/Secret/Secret.h
+( pio is an alias for platformio )
 ```sh
 $ vim lib/Secret/Secret.h
 $ pio run -e my_nodemcuv2 --target upload
