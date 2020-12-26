@@ -33,6 +33,7 @@ $ cd Prom117/
 ```
 
 Modify you WiFi logins in Prom117/lib/Secret/Secret.h
+
 ( pio is an alias for platformio )
 ```sh
 $ vim lib/Secret/Secret.h
