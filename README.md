@@ -44,7 +44,10 @@ Serial monitoring
 ```sh
 $ platformio device monitor
 ```
+### Todos
 
+ - Tests with the actual sensor
+ - Add more metrics
 
 [**NodeMCUv2 (ESP12-E)**]: <https://www.nodemcu.com/index_en.html>
 [**Sparkfun Texas Instrument TMP117 high-accuracy, low-power, i2C digital temperature sensor**]:<https://www.sparkfun.com/products/15805>
