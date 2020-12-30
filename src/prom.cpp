@@ -1,7 +1,3 @@
-/*
-Prom117 version 0.8
-*/
-
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <Wire.h>
@@ -12,10 +8,11 @@ Prom117 version 0.8
 
 #define NB_LIGNE 50
 #define STRING_SIZE 100
-#define TIMER 500 // Each loop in ms
+#define TIMER 1000 // Each loop in ms
 
 #define SDA_PIN D1
 #define SCL_PIN D2
+#define ANALOG_PIN A0 // Testing TEMP DELETE
 #define i2C_CLOCK 400000 // i2C Fast mode
 
 
@@ -28,6 +25,7 @@ String mystr = "";
 
 char uptime[64];
 char temp[64] = "22.051263";
+int analogValue = 0.0; // Testing TEMP DELETE
 
 bool staticValue = false; // Static strings, Generated once, ( I don't want them in setup() )
 bool b_sensor_init = false;
@@ -39,7 +37,7 @@ unsigned long last = 0;
 void setup_wifi();
 void generate_exporter();
 void sensor_init();
-const char* SensorData();
+const char* sensor_data();
 
 AsyncWebServer server(9100);
 TMP117 sensor;
@@ -64,7 +62,8 @@ void loop() {
       last = now;
       int intUptime = (int) millis() / 1000;
       snprintf(uptime,sizeof(uptime), "%d", intUptime); // Update uptime
-
+      analogValue = analogRead(ANALOG_PIN); // Testing TEMP DELETE
+      sniprintf(temp, sizeof(temp), "%d", analogValue); // Testing TEMP DELETE
       generate_exporter();
       Serial.println(mystr);
     }
