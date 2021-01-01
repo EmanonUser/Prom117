@@ -52,7 +52,7 @@ void setup() {
     request->send(200, "text/plain", mystr);
 });
   server.begin();
-  //sensor_init();
+  sensor_init();
 }
 
 void loop() {
@@ -101,7 +101,7 @@ void setup_wifi() {
 
 void generate_exporter() {
   mystr = "";
-  if(staticValue == false) {
+  if(!staticValue) {
     strcpy(myindex[0], "# TYPE nodemcu_uptime_seconds gauge\n");
     strcpy(myindex[1], "nodemcu_uptime_seconds ");
 
@@ -124,12 +124,12 @@ void generate_exporter() {
 void sensor_init() {
   b_sensor_init = sensor.begin();
   
-  while (b_sensor_init == false) {
+  while (!b_sensor_init) {
       Serial.println("TMP117 not initialised, retry in 10s");
       delay(10000);
   }
   
-  if (b_sensor_init == true) {
+  if (b_sensor_init) {
     Serial.println("TMP117 initialised");
   }
 }
