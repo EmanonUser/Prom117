@@ -1,2 +1,2 @@
-const char* myssid = "a";
-const char* mypasswd = "b";
+const char* myssid = "";
+const char* mypasswd = "";
