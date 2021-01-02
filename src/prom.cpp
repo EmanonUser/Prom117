@@ -22,7 +22,6 @@ String mystr = "";
 
 char uptime[64];
 char temp[64] = "22.051263";
-int analogValue = 0.0; // Testing TEMP DELETE
 
 bool staticValue = false; // Static strings, Generated once, ( I don't want them in setup() )
 bool b_sensor_init = false;
@@ -63,7 +62,6 @@ void loop() {
       int intUptime = (int) millis() / 1000;
       snprintf(uptime,sizeof(uptime), "%d", intUptime); // Update uptime
       analogValue = analogRead(ANALOG_PIN); // Testing TEMP DELETE
-      sniprintf(temp, sizeof(temp), "%d", analogValue); // Testing TEMP DELETE
       generate_exporter();
       Serial.println(mystr);
     }
