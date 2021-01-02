@@ -10,11 +10,8 @@
 #define STRING_SIZE 100
 #define TIMER 1000 // Each loop in ms
 
-#define SDA_PIN D1
-#define SCL_PIN D2
 #define ANALOG_PIN A0 // Testing TEMP DELETE
 #define i2C_CLOCK 400000 // i2C Fast mode
-
 
 const char* ssid = myssid; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_ssid";
 const char* password = mypasswd; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_password";
@@ -33,27 +30,30 @@ bool b_sensor_init = false;
 unsigned long now = 0;
 unsigned long last = 0;
 
-// Prototype
-void setup_wifi();
+void setup_wifi(); // Prototypes
 void generate_exporter();
-void sensor_init();
 const char* sensor_data();
+void sensor_init();
+void sensor_info();
 
-AsyncWebServer server(9100);
+AsyncWebServer server(9100); //Constructors server running on socket 0.0.0.0:9100
 TMP117 sensor;
+
 
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin(SDA_PIN, SCL_PIN);
+  Wire.begin(PIN_WIRE_SDA, PIN_WIRE_SCL); // GPIO SDA = D2, SCL = D1
   Wire.setClock(i2C_CLOCK);
   setup_wifi();
-  server.on("/metrics", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/metrics", HTTP_GET, [](AsyncWebServerRequest *request){ // http://IP:9100/metrics
     request->send(200, "text/plain", mystr);
 });
   server.begin();
-  //sensor_init();
+  // sensor_init();
 }
+
+
 
 void loop() {
   now = millis();
@@ -72,6 +72,7 @@ void loop() {
     }
   }
 }
+
 
 
 void setup_wifi() {
@@ -95,13 +96,13 @@ void setup_wifi() {
     Serial.println("Hostname: ");
     Serial.println(hostname);
   }
-  
-
 }
+
+
 
 void generate_exporter() {
   mystr = "";
-  if(staticValue == false) {
+  if(!staticValue) {
     strcpy(myindex[0], "# TYPE nodemcu_uptime_seconds gauge\n");
     strcpy(myindex[1], "nodemcu_uptime_seconds ");
 
@@ -112,36 +113,73 @@ void generate_exporter() {
     Serial.println("staticValue generated");
     staticValue = true;
   }
-
   strcpy(myindex[2], uptime);
   strcpy(myindex[5], temp);
 
-  for(int i = 0; i < 7; ++i) {
+  for(int i = 0; i < 7; ++i) { // Index max + 1, update if you add lignes
     mystr += myindex[i];
   }
 }
 
-void sensor_init() {
-  b_sensor_init = sensor.begin();
-  
-  while (b_sensor_init == false) {
-      Serial.println("TMP117 not initialised, retry in 10s");
-      delay(10000);
-  }
-  
-  if (b_sensor_init == true) {
-    Serial.println("TMP117 initialised");
-  }
-}
+
 
 const char* SensorData() {
   double tempC = 0.0;
   char sTempC[64];
-  if (sensor.dataReady() == true) { //Should always return true if the sensor is in Continuous Conversion Mode
+  if (sensor.dataReady() == true) { // Should always return true if the sensor is in Continuous Conversion Mode
     tempC = sensor.readTempC();
     snprintf(sTempC,sizeof(sTempC), "%f", tempC);
     return sTempC;
   }
   else
     return "-1";
+}
+
+
+
+void sensor_init() {
+  b_sensor_init = sensor.begin();
+  
+  while (!b_sensor_init) {
+      Serial.println("TMP117 not initialised, retry in 10s");
+      delay(10000);
+  }
+  
+  if (b_sensor_init) {
+    Serial.println("TMP117 initialised");
+    sensor_info();
+  }
+}
+
+
+
+void sensor_info() {
+  Serial.print("Current Conversion Mode: "); // Pure copy paste from Sparfun examples, shameless
+  if (sensor.getConversionMode() == 1)
+    Serial.println("Continuous Conversion");
+  else if (sensor.getConversionMode() == 2)
+    Serial.println("Shutdown Mode");
+  else if (sensor.getConversionMode() == 3)
+    Serial.println("One-Shot Mode");
+  else
+    Serial.println("ERROR");
+  
+  Serial.println("           Conversion Cycle Times in CC Mode      ");
+  Serial.println("               AVG       0       1       2       3");
+  Serial.println("       CONV  averaging  (0)     (8)     (32)   (64)");
+  Serial.println("         0             15.5ms  125ms   500ms    1s");
+  Serial.println("         1             125ms   125ms   500ms    1s");
+  Serial.println("         2             250ms   250ms   500ms    1s");
+  Serial.println("         3             500ms   500ms   500ms    1s");
+  Serial.println("         4             1s      1s      1s       1s");
+  Serial.println("         5             4s      4s      4s       4s");
+  Serial.println("         6             8s      8s      8s       8s");
+  Serial.println("         7             16s     16s     16s      16s");
+  Serial.println("AVG = Conversion Average Mode");
+  Serial.println("CONV = Conversion Cycle Bit");
+  Serial.println();
+  Serial.print("Current Conversion Average Mode: ");
+  Serial.println(sensor.getConversionAverageMode());
+  Serial.print("Current Conversion Cycle Bit Value: ");
+  Serial.println(sensor.getConversionCycleBit());
 }
