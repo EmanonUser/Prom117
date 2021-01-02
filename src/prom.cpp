@@ -38,6 +38,7 @@ void setup_wifi();
 void generate_exporter();
 void sensor_init();
 const char* sensor_data();
+void SensorInfo();
 
 AsyncWebServer server(9100);
 TMP117 sensor;
@@ -131,6 +132,7 @@ void sensor_init() {
   
   if (b_sensor_init) {
     Serial.println("TMP117 initialised");
+    SensorInfo();
   }
 }
 
@@ -144,4 +146,35 @@ const char* SensorData() {
   }
   else
     return "-1";
+}
+
+void SensorInfo() {
+  Serial.print("Current Conversion Mode: ");
+  if (sensor.getConversionMode() == 1)
+    Serial.println("Continuous Conversion");
+  else if (sensor.getConversionMode() == 2)
+    Serial.println("Shutdown Mode");
+  else if (sensor.getConversionMode() == 3)
+    Serial.println("One-Shot Mode");
+  else
+    Serial.println("ERROR");
+  
+  Serial.println("           Conversion Cycle Times in CC Mode      ");
+  Serial.println("               AVG       0       1       2       3");
+  Serial.println("       CONV  averaging  (0)     (8)     (32)   (64)");
+  Serial.println("         0             15.5ms  125ms   500ms    1s");
+  Serial.println("         1             125ms   125ms   500ms    1s");
+  Serial.println("         2             250ms   250ms   500ms    1s");
+  Serial.println("         3             500ms   500ms   500ms    1s");
+  Serial.println("         4             1s      1s      1s       1s");
+  Serial.println("         5             4s      4s      4s       4s");
+  Serial.println("         6             8s      8s      8s       8s");
+  Serial.println("         7             16s     16s     16s      16s");
+  Serial.println("AVG = Conversion Average Mode");
+  Serial.println("CONV = Conversion Cycle Bit");
+  Serial.println();
+  Serial.print("Current Conversion Average Mode: ");
+  Serial.println(sensor.getConversionAverageMode());
+  Serial.print("Current Conversion Cycle Bit Value: ");
+  Serial.println(sensor.getConversionCycleBit());
 }
