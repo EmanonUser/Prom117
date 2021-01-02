@@ -36,11 +36,12 @@ unsigned long last = 0;
 // Prototype
 void setup_wifi();
 void generate_exporter();
-void sensor_init();
 const char* sensor_data();
-void SensorInfo();
+void sensor_init();
+void sensor_info();
 
-AsyncWebServer server(9100);
+
+AsyncWebServer server(9100); //Run on socket 0.0.0.0:9100
 TMP117 sensor;
 
 
@@ -122,20 +123,6 @@ void generate_exporter() {
   }
 }
 
-void sensor_init() {
-  b_sensor_init = sensor.begin();
-  
-  while (!b_sensor_init) {
-      Serial.println("TMP117 not initialised, retry in 10s");
-      delay(10000);
-  }
-  
-  if (b_sensor_init) {
-    Serial.println("TMP117 initialised");
-    SensorInfo();
-  }
-}
-
 const char* SensorData() {
   double tempC = 0.0;
   char sTempC[64];
@@ -148,7 +135,22 @@ const char* SensorData() {
     return "-1";
 }
 
-void SensorInfo() {
+void sensor_init() {
+  b_sensor_init = sensor.begin();
+  
+  while (!b_sensor_init) {
+      Serial.println("TMP117 not initialised, retry in 10s");
+      delay(10000);
+  }
+  
+  if (b_sensor_init) {
+    Serial.println("TMP117 initialised");
+    sensor_info();
+  }
+}
+
+
+void sensor_info() {
   Serial.print("Current Conversion Mode: ");
   if (sensor.getConversionMode() == 1)
     Serial.println("Continuous Conversion");
