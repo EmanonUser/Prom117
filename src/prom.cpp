@@ -10,8 +10,6 @@
 #define STRING_SIZE 100
 #define TIMER 1000 // Each loop in ms
 
-#define SDA_PIN D1
-#define SCL_PIN D2
 #define ANALOG_PIN A0 // Testing TEMP DELETE
 #define i2C_CLOCK 400000 // i2C Fast mode
 
@@ -45,7 +43,7 @@ TMP117 sensor;
 
 void setup() {
   Serial.begin(115200);
-  Wire.begin(SDA_PIN, SCL_PIN);
+  Wire.begin(PIN_WIRE_SDA, PIN_WIRE_SCL); // GPIO SDA = D2, SCL = D1
   Wire.setClock(i2C_CLOCK);
   setup_wifi();
   server.on("/metrics", HTTP_GET, [](AsyncWebServerRequest *request){ // http://IP:9100/metrics
