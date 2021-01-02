@@ -15,7 +15,6 @@
 #define ANALOG_PIN A0 // Testing TEMP DELETE
 #define i2C_CLOCK 400000 // i2C Fast mode
 
-
 const char* ssid = myssid; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_ssid";
 const char* password = mypasswd; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_password";
 const char* hostname = "prom117"; //DHCP Hostname
@@ -33,16 +32,15 @@ bool b_sensor_init = false;
 unsigned long now = 0;
 unsigned long last = 0;
 
-// Prototype
-void setup_wifi();
+void setup_wifi(); // Prototypes
 void generate_exporter();
 const char* sensor_data();
 void sensor_init();
 void sensor_info();
 
-
-AsyncWebServer server(9100); //Run on socket 0.0.0.0:9100
+AsyncWebServer server(9100); //Constructors server running on socket 0.0.0.0:9100
 TMP117 sensor;
+
 
 
 void setup() {
@@ -50,12 +48,14 @@ void setup() {
   Wire.begin(SDA_PIN, SCL_PIN);
   Wire.setClock(i2C_CLOCK);
   setup_wifi();
-  server.on("/metrics", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/metrics", HTTP_GET, [](AsyncWebServerRequest *request){ // http://IP:9100/metrics
     request->send(200, "text/plain", mystr);
 });
   server.begin();
   sensor_init();
 }
+
+
 
 void loop() {
   now = millis();
@@ -74,6 +74,7 @@ void loop() {
     }
   }
 }
+
 
 
 void setup_wifi() {
@@ -97,9 +98,9 @@ void setup_wifi() {
     Serial.println("Hostname: ");
     Serial.println(hostname);
   }
-  
-
 }
+
+
 
 void generate_exporter() {
   mystr = "";
@@ -114,19 +115,20 @@ void generate_exporter() {
     Serial.println("staticValue generated");
     staticValue = true;
   }
-
   strcpy(myindex[2], uptime);
   strcpy(myindex[5], temp);
 
-  for(int i = 0; i < 7; ++i) {
+  for(int i = 0; i < 7; ++i) { // Index max + 1, update if you add lignes
     mystr += myindex[i];
   }
 }
 
+
+
 const char* SensorData() {
   double tempC = 0.0;
   char sTempC[64];
-  if (sensor.dataReady() == true) { //Should always return true if the sensor is in Continuous Conversion Mode
+  if (sensor.dataReady() == true) { // Should always return true if the sensor is in Continuous Conversion Mode
     tempC = sensor.readTempC();
     snprintf(sTempC,sizeof(sTempC), "%f", tempC);
     return sTempC;
@@ -134,6 +136,8 @@ const char* SensorData() {
   else
     return "-1";
 }
+
+
 
 void sensor_init() {
   b_sensor_init = sensor.begin();
@@ -150,8 +154,9 @@ void sensor_init() {
 }
 
 
+
 void sensor_info() {
-  Serial.print("Current Conversion Mode: ");
+  Serial.print("Current Conversion Mode: "); // Pure copy paste from Sparfun examples, shameless
   if (sensor.getConversionMode() == 1)
     Serial.println("Continuous Conversion");
   else if (sensor.getConversionMode() == 2)
