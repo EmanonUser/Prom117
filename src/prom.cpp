@@ -8,7 +8,7 @@
 
 #define NB_LIGNE 50
 #define STRING_SIZE 100
-#define TIMER 1000 // Each loop in ms
+#define TIMER 2000 // Each loop in ms min 1.2s
 
 #define ANALOG_PIN A0 // Testing TEMP DELETE
 #define i2C_CLOCK 400000 // i2C Fast mode
@@ -21,7 +21,7 @@ char myindex[NB_LIGNE][STRING_SIZE];
 String mystr = "";
 
 char uptime[64];
-char temp[64] = "22.051263";
+char temp[64] = "0";
 
 bool staticValue = false; // Static strings, Generated once, ( I don't want them in setup() )
 bool b_sensor_init = false;
@@ -61,7 +61,7 @@ void loop() {
       last = now;
       int intUptime = (int) millis() / 1000;
       snprintf(uptime,sizeof(uptime), "%d", intUptime); // Update uptime
-      analogValue = analogRead(ANALOG_PIN); // Testing TEMP DELETE
+      strcpy(temp, sensor_data());
       generate_exporter();
       Serial.println(mystr);
     }
@@ -121,7 +121,7 @@ void generate_exporter() {
 
 
 
-const char* SensorData() {
+const char* sensor_data() {
   double tempC = 0.0;
   char sTempC[64];
   if (sensor.dataReady() == true) { // Should always return true if the sensor is in Continuous Conversion Mode
