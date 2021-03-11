@@ -23,7 +23,7 @@ Install [**PlatformIO**] and git on your platform
 Debian/Ubuntu
 ```sh
 $ sudo apt install git 
-$ git clone https://github.com/EmanonRS232/Prom117.git
+$ git clone https://github.com/EmanonUser/Prom117.git
 $ cd Prom117/
 ```
 
