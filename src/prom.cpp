@@ -10,11 +10,10 @@
 #define STRING_SIZE 100
 #define TIMER 2000 // Each loop in ms min 1.2s
 
-#define ANALOG_PIN A0 // Testing TEMP DELETE
 #define i2C_CLOCK 400000 // i2C Fast mode
 
-const char* ssid = myssid; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_ssid";
-const char* password = mypasswd; // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_password";
+const char* ssid = myssid;        // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_ssid";
+const char* password = mypasswd;  // In ../lib/Secret/Secret.h Exemple: const char* myssid = "wifi_password";
 const char* hostname = "prom117"; //DHCP Hostname
 
 char myindex[NB_LIGNE][STRING_SIZE]; 
@@ -35,7 +34,7 @@ const char* sensor_data();
 void sensor_init();
 void sensor_info();
 
-AsyncWebServer server(9100); //Constructors server running on socket 0.0.0.0:9100
+AsyncWebServer server(9100); // Server running on socket 0.0.0.0:9100
 TMP117 sensor;
 
 
