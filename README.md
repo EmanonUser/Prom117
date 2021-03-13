@@ -17,6 +17,8 @@ Software Used :
  
 Exported Metrics:
 ![exporter.png](https://github.com/MoEmanon/Prom117/blob/master/pictures/exporter.png)
+Schematic:
+![Sparkfun_TMP117_ESP12-E.png](https://github.com/MoEmanon/Prom117/blob/master/pictures/Sparkfun_TMP117_ESP12-E.png)
   
 ## Usage
 ### Compile the sketch and flash it using platformio
@@ -41,16 +43,16 @@ Or you can do it in cli
 ```sh
 $ platformio run -e my_nodemcuv2 --target upload
 ```
-Done !
+Done !\
+Access the metrics : http://ESP12_IP:9100/metrics
 
-Monitor the serial output
+Monitor the serial output on your pc
 ```sh
 $ platformio device monitor
 ```
 
 [**NodeMCUv2 (ESP12-E)**]: <https://www.nodemcu.com/index_en.html>
 [**Sparkfun Texas Instrument TMP117 high-accuracy, low-power, i2C digital temperature sensor**]:<https://www.sparkfun.com/products/15805>
-
 [**PlatformIO CLI**]: <https://platformio.org/>
 [**PlatformIO**]: <https://docs.platformio.org/en/latest/core/installation.html>
 [**SparkFun_TMP117**]: <https://github.com/sparkfun/SparkFun_TMP117_Arduino_Library>
