@@ -15,7 +15,7 @@ Software Used :
   - [**ESPAsyncWebServer**] library
   - [**Prometheus TSDB**]
  
-Exported Metrics: https://github.com/MoEmanon/Prom117/blob/master/pictures/exporter.png\
+Exported Metrics: https://github.com/MoEmanon/Prom117/blob/master/pictures/exporter.png \
 Schematic: https://github.com/MoEmanon/Prom117/blob/master/pictures/Sparkfun_TMP117_ESP12-E.png
   
 ## Usage
