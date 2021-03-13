@@ -1,6 +1,7 @@
 # Prom117
 
-Prom117 is an NodeMCU arduino-like sketch, the goal is to export Texas Instrument's TMP117 digital temperature sensor data into Prometheus a time series database
+Prom117 is an Prometheus exporter for the Texas Instrument's TMP117 digital temperature sensor\
+The software is written for the ESP12-E an Espressif Microcontroler
 
 Hardware Used :
 
@@ -13,12 +14,13 @@ Software Used :
   - [**SparkFun_TMP117**] library
   - [**ESPAsyncWebServer**] library
   - [**Prometheus TSDB**]
+ 
+Exported Metrics:
+![exporter.png](https://github.com/MoEmanon/Prom117/blob/master/pictures/exporter.png)
   
-
-### Compile using platformio CLI
-PlatformIO will take care of all the dependency for you
-
-Install [**PlatformIO**] and git on your platform
+## Usage
+### Compile the sketch and flash it using platformio
+First Install [**PlatformIO**] and git on your platformPlatformIO will take care of all the dependency for you
 
 Debian/Ubuntu
 ```sh
@@ -27,16 +29,21 @@ $ git clone https://github.com/EmanonUser/Prom117.git
 $ cd Prom117/
 ```
 
-
-Modify you WiFi logins in Prom117/lib/Secret/Secret.h then compile and flash automatically via esptools
+Modify you WiFi logins in Prom117/lib/Secret/Secret.h
 
 ```sh
 $ vim lib/Secret/Secret.h
+```
+
+If you use VScode download the PlatformIO extension, from there you will be able to compile the sketch and flash it on the ESP12\
+Or you can do it in cli 
+
+```sh
 $ platformio run -e my_nodemcuv2 --target upload
 ```
 Done !
 
-Serial monitoring
+Monitor the serial output
 ```sh
 $ platformio device monitor
 ```
