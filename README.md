@@ -1,7 +1,7 @@
 # Prom117
 
 Prom117 is an Prometheus exporter for the Texas Instrument's TMP117 digital temperature sensor\
-The software is written for the ESP12-E an Espressif Microcontroler
+The software is written for the NodeMCUv2 based on a ESP12-E Espressif Microcontroler
 
 Hardware Used :
 
@@ -35,7 +35,7 @@ Modify you WiFi logins in Prom117/lib/Secret/Secret.h
 $ vim lib/Secret/Secret.h
 ```
 
-If you use VScode download the PlatformIO extension, from there you will be able to compile the sketch and flash it on the ESP12\
+If you use VScode download the PlatformIO extension, from there you will be able to compile the sketch and flash it on the NodeMCU\
 Or you can do it in cli 
 
 ```sh
