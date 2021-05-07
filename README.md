@@ -5,7 +5,7 @@ The software is written for the ESP12-E an Espressif Microcontroler
 
 Hardware Used :
 
-  - [**NodeMCUv2 (ESP12-E)**]
+  - [**NodeMCUv2**]
   - [**Sparkfun Texas Instrument TMP117 high-accuracy, low-power, i2C digital temperature sensor**]
 
 Software Used :
@@ -42,14 +42,14 @@ Or you can do it in cli
 $ platformio run -e my_nodemcuv2 --target upload
 ```
 Done !\
-Access the metrics : http://ESP12_IP:9100/metrics
+Access the metrics : http://NodeMCU_IP:9100/metrics
 
 Monitor the serial output on your pc
 ```sh
 $ platformio device monitor
 ```
 
-[**NodeMCUv2 (ESP12-E)**]: <https://www.nodemcu.com/index_en.html>
+[**NodeMCUv2**]: <https://www.nodemcu.com/index_en.html>
 [**Sparkfun Texas Instrument TMP117 high-accuracy, low-power, i2C digital temperature sensor**]:<https://www.sparkfun.com/products/15805>
 [**PlatformIO CLI**]: <https://platformio.org/>
 [**PlatformIO**]: <https://docs.platformio.org/en/latest/core/installation.html>
